@@ -1,0 +1,40 @@
+/* home.component.css */
+.home-container {
+    background-image: url('https://www.smallcase.com/wp-content/uploads/2023/02/1_50mUyu5Utr_CHDYJX6OyWA.jpeg'); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .home-content {
+    text-align: center;
+    color: #bb8a5c;
+  }
+  
+  .home-content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .home-content p {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  .home-content .btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .home-content .btn:hover {
+    background-color: #0056b3;
+  }
+  
