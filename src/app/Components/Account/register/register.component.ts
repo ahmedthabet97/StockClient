@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AccountModule } from '../account.module';
+import { CommonModule } from '@angular/common';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [AccountModule],
+  imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit{
 registerForm: FormGroup = new FormGroup({});
   submitted =false;
   errorMessages : string [] = [];
-  constructor(private accountService:AccountService,private formBuilder:FormBuilder)
+  constructor(private accountService:AccountService,private formBuilder:FormBuilder, private router: Router)
   {}
   ngOnInit(): void {
     this.initializeform();
@@ -35,12 +36,18 @@ register() {
   this.accountService.register(this.registerForm.value).subscribe({
     next:(response)=>{
       console.log(response);
+      this.router.navigateByUrl('/account/login');
     },
-    error: error=>{
-      console.log(error);
+    error: error => {
+      if (error.error.errors) {
+        this.errorMessages = error.error.errors;
+      } else {
+        this.errorMessages.push(error.error);
+      }
     }
     
   })
 
   }
+  
 }

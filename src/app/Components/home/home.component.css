@@ -1,6 +1,6 @@
 /* home.component.css */
 .home-container {
-    background-image: url('https://www.smallcase.com/wp-content/uploads/2023/02/1_50mUyu5Utr_CHDYJX6OyWA.jpeg'); 
+    background-image: url('https://img.freepik.com/free-vector/gradient-futuristic-background-with-connection-concept_23-2149110434.jpg'); 
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -11,7 +11,7 @@
   
   .home-content {
     text-align: center;
-    color: #bb8a5c;
+    color: #fff;
   }
   
   .home-content h1 {
