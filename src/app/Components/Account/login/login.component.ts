@@ -3,6 +3,8 @@ import { AccountService } from '../account.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { take } from 'rxjs';
+import { User } from '../../../Models/User';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,15 @@ export class LoginComponent implements OnInit{
   errorMessages: string[] = [];
   returnUrl: string | null = null;
   constructor(private accountService:AccountService,private formBuilder:FormBuilder, private router: Router)
-  {}
+  {
+    this.accountService.user$.pipe(take(1)).subscribe({
+      next:(user:User|null)=>{
+        if(user){
+          this.router.navigateByUrl('/')
+      }
+      }
+    })
+  }
   ngOnInit(): void {
     this.initializeform()
   }
@@ -36,7 +46,7 @@ export class LoginComponent implements OnInit{
     {
       this.accountService.Login(this.loginForm.value).subscribe({
         next:(response:any)=>{
-          console.log(response)
+          this.router.navigateByUrl('/')
         },
         error:error=>{
           if (error.error.errors) {

@@ -4,6 +4,7 @@ import { SignalrService } from './Services/signalr.service';
 import { NavMenuComponent } from "./Components/nav-menu/nav-menu.component";
 import { HubConnection } from '@microsoft/signalr';
 import { FooterComponent } from './Components/footer/footer.component';
+import { AccountService } from './Components/Account/account.service';
 
 @Component({
     selector: 'app-root',
@@ -12,18 +13,29 @@ import { FooterComponent } from './Components/footer/footer.component';
     styleUrl: './app.component.css',
     imports: [RouterOutlet, NavMenuComponent,FooterComponent]
 })
-export class AppComponent  {
-  title = 'StockClient';
-  constructor(public signalRService: SignalrService) {}
+export class AppComponent implements OnInit {
 
-  // ngOnInit(): void {
-  //   this.signalRService.startConnection();
-  //   setTimeout(()=>{
-  //     this.signalRService.askServerListener();
-  //     this.signalRService.askServer();
-  //   },2000);
-  // }
+  constructor(public signalRService: SignalrService,private accountService:AccountService) {}
+  ngOnInit(): void {
 
+    this.refreshUser()
+  }
+  private refreshUser()
+  {
+    const jwt = this.accountService.getJWT()
+    if(jwt){
+      this.accountService.refreshUser(jwt).subscribe(
+        {
+          next:response=>{},
+          error:error =>{
+            this.accountService.logOut();
+          }
+        }
+      )
+    }else{
+      this.accountService.refreshUser(null).subscribe();
+    }
+  }
   ngOnDestroy(): void {
     if(HubConnection != undefined)
     {
