@@ -22,7 +22,7 @@ message :string = ""
       next:(response:any)=>{
         this.message = response.value
         console.log(response.value)},
-      error:error=>console.log(error)
+      error:error=>{console.log(error),this.message=error.message}
     })
   }
 
